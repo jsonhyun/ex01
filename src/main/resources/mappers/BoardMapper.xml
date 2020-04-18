@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMapper">
+	<insert id="insert" parameterType="BoardVO">
+		insert into tbl_board (title, content, writer) 
+		values(#{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="readByNo" resultType="BoardVO">
+		select * from tbl_board
+		where bno = #{bno}
+	</select>
+	
+	<select id="list" resultType="BoardVO">
+		select * from tbl_board order by bno desc
+	</select>
+	
+	<update id="update" parameterType="BoardVO">
+		update tbl_board set title=#{title}, content=#{content}
+		where bno = #{bno}
+	</update>
+	
+	<update id="updateViewcnt" parameterType="BoardVO">
+		update tbl_board set viewcnt=#{viewcnt}
+		where bno = #{bno}
+	</update>
+	
+	<delete id="delete" parameterType="BoardVO">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+	
+	<select id="listPage" resultType="BoardVO">
+		select * from tbl_board order by bno desc limit #{page}, 10
+	</select>
+	
+	<select id="listCriteria" resultType="BoardVO">
+		select * from tbl_board order by bno desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="totalCount" resultType="int">
+		select count(bno) from tbl_board
+	</select>
+</mapper>
