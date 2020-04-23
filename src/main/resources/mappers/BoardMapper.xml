@@ -40,4 +40,36 @@
 	<select id="totalCount" resultType="int">
 		select count(bno) from tbl_board
 	</select>
+	
+	<sql id="search">
+		<if test="searchType=='t'.toString()">
+			where title like CONCAT('%','${keyword}','%')
+		</if>
+		<if test="searchType=='c'.toString()">
+			where content like CONCAT('%','${keyword}','%')
+		</if>
+		<if test="searchType=='w'.toString()">
+			where writer like CONCAT('%','${keyword}','%')
+		</if>
+		<if test="searchType=='tc'.toString()">
+				where title like CONCAT('%','${keyword}','%') OR content like CONCAT('%','${keyword}','%')
+		</if>
+		<if test="searchType=='cw'.toString()">
+			where content like CONCAT('%','${keyword}','%') OR writer like CONCAT('%','${keyword}','%')
+		</if>
+		<if test="searchType=='tcw'.toString()">
+			where title like CONCAT('%','${keyword}','%') OR content like CONCAT('%','${keyword}','%') OR writer like CONCAT('%','${keyword}','%')
+		</if>
+	</sql>
+	
+	<select id="listSearchCriteria" resultType="BoardVO">
+		select * from tbl_board
+			<include refid="search"></include>
+			order by bno desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="totalSearchCount" resultType="int">
+		select count(bno) from tbl_board
+			<include refid="search"></include>
+	</select>
 </mapper>
