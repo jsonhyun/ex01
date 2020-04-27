@@ -64,6 +64,8 @@ public class SearchBoardController {
 	@RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
 	public String modifyPage(int bno, SearchCriteria cri, Model model) throws Exception {
 		BoardVO vo = service.readByNo(bno);
+		vo.setViewcnt(vo.getViewcnt()-1);
+		service.updateViewcnt(vo);
 		model.addAttribute("board", vo);
 		model.addAttribute("page", cri.getPage());
 		model.addAttribute("searchType", cri.getSearchType());

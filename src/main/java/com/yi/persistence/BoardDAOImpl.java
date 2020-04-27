@@ -1,6 +1,8 @@
 package com.yi.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +83,14 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int totalSearchCount(SearchCriteria cri) throws Exception {
 		return sqlSession.selectOne(namespace+"totalSearchCount", cri);
+	}
+
+	@Override
+	public void updateReplyCnt(int amount, int bno) throws Exception {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("amount", amount);
+		map.put("bno", bno);
+		sqlSession.update(namespace+"updateReplyCnt", map);
 	}
 
 }

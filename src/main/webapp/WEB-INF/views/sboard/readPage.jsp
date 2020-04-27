@@ -77,7 +77,7 @@
 			</div>
 			<ul class="timeline">
 				<li class="time-label" id="repliesDiv">
-					<span class="bg-green">Replies List</span>
+					<span class="bg-green">Replies List<span id="replycnt">[${board.replycnt }]</span></span>
 				</li>
 			</ul>
 			<div class="text-center">
@@ -151,6 +151,8 @@
 				var source = $("#template").html();
 				var func = Handlebars.compile(source);
 				$(".timeline").append(func(res));
+				
+				$("#replycnt").html("["+res.pageMaker.totalCount+"]");	
 				
 				$("#pagination").empty();
 				for(var i = res.pageMaker.startPage; i<= res.pageMaker.endPage; i++){

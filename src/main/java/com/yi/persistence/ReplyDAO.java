@@ -12,4 +12,5 @@ public interface ReplyDAO {
 	public void delete(int rno) throws Exception;
 	public List<ReplyVO> listPage(int bno, Criteria cri) throws Exception;
 	public int totalCount(int bno) throws Exception;
+	public ReplyVO selectByRno(int rno) throws Exception;
 }

@@ -9,18 +9,28 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private int viewcnt;
+	private int replycnt;
 
 	public BoardVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BoardVO(int bno, String title, String content, String writer, Date regdate, int viewcnt) {
+	public BoardVO(int bno, String title, String content, String writer, Date regdate, int viewcnt, int replycnt) {
 		this.bno = bno;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.regdate = regdate;
 		this.viewcnt = viewcnt;
+		this.replycnt = replycnt;
+	}
+
+	public int getReplycnt() {
+		return replycnt;
+	}
+
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
 	}
 
 	public int getBno() {
@@ -74,7 +84,7 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", viewcnt=" + viewcnt + "]";
+				+ regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt + "]";
 	}
 
 }

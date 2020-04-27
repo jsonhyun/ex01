@@ -72,4 +72,8 @@
 		select count(bno) from tbl_board
 			<include refid="search"></include>
 	</select>
+	
+	<update id="updateReplyCnt">
+		update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
+	</update>
 </mapper>
