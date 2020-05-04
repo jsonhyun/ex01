@@ -93,4 +93,42 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.update(namespace+"updateReplyCnt", map);
 	}
 
+	@Override
+	public void addAttach(String fullname) throws Exception {
+		sqlSession.insert(namespace+"addAttach", fullname);
+	}
+
+	@Override
+	public BoardVO readAndAttachByBno(int bno) throws Exception {
+		return sqlSession.selectOne(namespace+"readAndAttachByBno", bno);
+	}
+
+	@Override
+	public void delAttach(String fullname) throws Exception {
+		sqlSession.delete(namespace+"delAttach", fullname);
+		
+		
+	}
+
+	@Override
+	public void modAttach(String fullname, int bno) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fullname", fullname);
+		map.put("bno", bno);
+		sqlSession.insert(namespace+"modAttach", map);
+		
+	}
+
+	@Override
+	public void delAllAttach(int bno) throws Exception {
+		sqlSession.delete(namespace+"delAllAttach", bno);
+		
+	}
+
+	@Override
+	public List<String> selFullName(int bno) throws Exception {
+		return sqlSession.selectList(namespace+"selFullName", bno);
+		
+	}
+
 }

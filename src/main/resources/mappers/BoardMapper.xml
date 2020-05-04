@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.BoardMapper">
+	<resultMap type="BoardVO" id="BoardResult">
+		<id property="bno" column="bno"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="writer" column="writer"/>
+		<result property="regdate" column="regdate"/>
+		<result property="viewcnt" column="viewcnt"/>
+		<result property="replycnt" column="replycnt"/>
+		<collection property="files" ofType="java.lang.String" javaType="list">
+			<result column="fullName"/>
+		</collection>
+	</resultMap>
+	
 	<insert id="insert" parameterType="BoardVO">
 		insert into tbl_board (title, content, writer) 
 		values(#{title}, #{content}, #{writer})
@@ -9,6 +22,11 @@
 	<select id="readByNo" resultType="BoardVO">
 		select * from tbl_board
 		where bno = #{bno}
+	</select>
+	
+	<select id="readAndAttachByBno" resultMap="BoardResult">
+		select * from tbl_board b left join tbl_attach a on b.bno = a.bno 
+		where b.bno = #{bno};
 	</select>
 	
 	<select id="list" resultType="BoardVO">
@@ -76,4 +94,24 @@
 	<update id="updateReplyCnt">
 		update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
 	</update>
+	
+	<select id="selFullName" resultType="String">
+		select fullName from tbl_attach where bno = #{bno}
+	</select>
+	
+	<insert id="addAttach">
+		insert into tbl_attach (fullName, bno) values (#{fullname}, last_insert_id())
+	</insert>
+	
+	<insert id="modAttach">
+		insert into tbl_attach (fullName, bno) values(#{fullname}, #{bno})
+	</insert>
+	
+	<delete id="delAttach">
+		delete from tbl_attach where fullName = #{fullname}
+	</delete>
+	
+	<delete id="delAllAttach">
+		delete from tbl_attach where bno = #{bno}
+	</delete>
 </mapper>

@@ -1,5 +1,6 @@
 package com.yi.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class BoardVO {
@@ -10,6 +11,7 @@ public class BoardVO {
 	private Date regdate;
 	private int viewcnt;
 	private int replycnt;
+	private ArrayList<String> files; //tbl_attach에서 파일이름을 가져옴
 
 	public BoardVO() {
 		// TODO Auto-generated constructor stub
@@ -23,6 +25,14 @@ public class BoardVO {
 		this.regdate = regdate;
 		this.viewcnt = viewcnt;
 		this.replycnt = replycnt;
+	}
+
+	public ArrayList<String> getFiles() {
+		return files;
+	}
+
+	public void setFiles(ArrayList<String> files) {
+		this.files = files;
 	}
 
 	public int getReplycnt() {
@@ -84,7 +94,7 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt + "]";
+				+ regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt + ", files=" + files + "]";
 	}
 
 }
