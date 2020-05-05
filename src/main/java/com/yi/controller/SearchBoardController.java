@@ -101,17 +101,23 @@ public class SearchBoardController {
 	
 	@RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
 	public String modifyPage(BoardVO vo, SearchCriteria cri, Model model, String[] imgFile, List<MultipartFile> imageFiles) throws Exception {
-		System.out.println(vo);
 		
 		//체크된 이미지 모두 지우기
-		for(int i=0;i<imgFile.length;i++) {
-			service.delAttach(imgFile[i]);//DB에서 삭제
-			UploadFileUtils.deleteFile(uploadPath, imgFile[i]);//이미지가 저장된 폴더에서 파일 삭제
+		if(imgFile == null && imageFiles.get(0).getSize()==0) {//체크된 이미지와 추가이미지가 없을 경우 처리 조건절
+			return "redirect:/sboard/readPage?bno="+vo.getBno()+"&page="+cri.getPage()+"&searchType="+cri.getSearchType();
+		}else if(imgFile != null) {
+			for(int i=0;i<imgFile.length;i++) {
+				service.delAttach(imgFile[i]);//DB에서 삭제
+				UploadFileUtils.deleteFile(uploadPath, imgFile[i]);//이미지가 저장된 폴더에서 파일 삭제
+			}
 		}
 		ArrayList<String> fullNames = new ArrayList<String>();
 		for(MultipartFile file : imageFiles) {
-			System.out.println(file.getOriginalFilename());
-			System.out.println(file.getSize());
+			if(file.getSize()==0) {//체크된 이미지만 삭제할 경우 처리 조건절
+				break;
+			}
+			System.out.println(file.getOriginalFilename()+"오리지날");
+			System.out.println(file.getSize()+"사이즈");
 			
 			//upload처리
 			String savedName = UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
